@@ -17,5 +17,13 @@
         android:id="@+id/saveReminderFragment"
         android:name="com.phalder.locationreminder.locationreminders.SaveReminderFragment"
         android:label="@string/title_fragments"
-        tools:layout="@layout/fragment_save_reminder" />
+        tools:layout="@layout/fragment_save_reminder" >
+        <action
+            android:id="@+id/action_saveReminderFragment_to_selectLocationFragment"
+            app:destination="@id/selectLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="com.phalder.locationreminder.locationreminders.SelectLocationFragment"
+        android:label="@string/title_fragments" />
 </navigation>

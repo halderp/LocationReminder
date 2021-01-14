@@ -10,6 +10,7 @@ import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.LocationServices
 import com.phalder.locationreminder.R
 import com.phalder.locationreminder.base.BaseFragment
+import com.phalder.locationreminder.base.NavigationCommand
 import com.phalder.locationreminder.databinding.FragmentSaveReminderBinding
 import com.phalder.locationreminder.utils.setDisplayHomeAsUpEnabled
 import org.koin.android.ext.android.inject
@@ -39,8 +40,9 @@ class SaveReminderFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         binding.selectLocation.setOnClickListener {
-            //Navigate to another fragment to get the user location
-
+            //Navigate to Map fragment to get the user location
+            _viewModel.navigationCommand.value =
+                NavigationCommand.To(SaveReminderFragmentDirections.actionSaveReminderFragmentToSelectLocationFragment())
         }
 
         binding.saveReminder.setOnClickListener {

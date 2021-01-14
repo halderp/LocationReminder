@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MyApp"
@@ -14,14 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LocationReminder">
         <activity
+            android:name=".locationreminders.ReminderDescriptionActivity"
+            android:label="@string/title_activity_reminder_description"></activity>
+        <activity
             android:name=".locationreminders.RemindersActivity"
-            android:label="@string/title_activity_reminders">
-        </activity>
+            android:label="@string/title_activity_reminders" />
         <activity
             android:name=".authentication.AuthenticationActivity"
             android:label="@string/title_activity_authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,6 +36,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBHFkMrjBSiPilcjVXe1GedFlS6IWzHc7U" />
     </application>
 
 </manifest>

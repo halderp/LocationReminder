@@ -36,7 +36,10 @@ class ReminderListFragment : BaseFragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_reminder_list, container, false)
         binding.viewModel = _viewModel
 
-        binding.refreshLayout.setOnRefreshListener { _viewModel.loadReminders() }
+        binding.refreshLayout.setOnRefreshListener {
+            _viewModel.loadReminders()
+            binding.refreshLayout.isRefreshing = false
+        }
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(false)
 
