@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.21"
+    ext.navigationVersion = "2.3.2"
     repositories {
         google()
         jcenter()
@@ -8,11 +9,10 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.gms:google-services:4.3.4'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+
     }
 }
 
@@ -25,12 +25,22 @@ allprojects {
 
 ext {
     // App dependencies
+    androidXVersion = '1.0.0'
+    androidXAnnotations = '1.0.1'
+    androidXLegacySupport = '1.0.0'
+    appCompatVersion = '1.2.0'
+    materialVersion = '1.1.0'
+    recyclerViewVersion = '1.1.0'
+    constraintVersion = '2.0.0-rc1'
+    roomVersion = '2.2.6'
     firebaseBOMVersion = '26.1.0'
     firebaseAuthUIVersion = '7.1.1'
     archLifecycleVersion = '2.2.0'
     googlePlayServiceAuthVersion = '19.0.0'
     cardVersion = '1.0.0'
     junitVersion = '4.12'
+    koinVersion = '2.0.1'
+    playServicesVersion = '17.0.0'
 }
 
 task clean(type: Delete) {

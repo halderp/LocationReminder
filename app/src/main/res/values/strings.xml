@@ -8,5 +8,16 @@
     <string name="welcome_to_the_location_reminder_app">Welcome To The Location Reminder App</string>
     <string name="btn_login_text">Login</string>
     <string name="title_activity_reminders">Location Reminders</string>
+    <string name="title_fragments">Location Reminders</string>
     <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="no_data">No data available</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reminder_saved">Reminder Saved !</string>
+    <string name="err_enter_title">Please enter title</string>
+    <string name="err_select_location">Please select location</string>
+    <string name="reminder_title">Reminder Title</string>
+    <string name="reminder_desc">Description</string>
+    <string name="reminder_location">Reminder Location</string>
 </resources>
