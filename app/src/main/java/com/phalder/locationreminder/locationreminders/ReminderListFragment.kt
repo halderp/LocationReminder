@@ -1,5 +1,6 @@
 package com.phalder.locationreminder.locationreminders
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -60,7 +61,11 @@ class ReminderListFragment : BaseFragment() {
         }
     }
     private fun setupRecyclerView() {
+
+        // create adapter with callback to open Details of reminder when user clicks an item on list
         val adapter = RemindersListAdapter {
+            val intent = activity?.let { it1 -> ReminderDescriptionActivity.newIntent(it1,it ) }
+            startActivity(intent)
         }
         //setup the recycler view using the extension function
         binding.reminderssRecyclerView.setup(adapter)
