@@ -195,12 +195,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     // Gets the user's permission to use location services
     private fun isLocationPermissionsGranted(): Boolean {
-        return context?.let {
-            ContextCompat.checkSelfPermission(
-                it,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        } == PackageManager.PERMISSION_GRANTED
+        return ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED))
     }
 
     @SuppressLint("MissingPermission")
@@ -210,7 +206,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         } else {
             ActivityCompat.requestPermissions(
                 context as Activity,
-                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
         }

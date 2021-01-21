@@ -41,6 +41,7 @@ ext {
     junitVersion = '4.12'
     koinVersion = '2.0.1'
     playServicesVersion = '17.0.0'
+    espressoVersion = '3.3.0'
 }
 
 task clean(type: Delete) {
