@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ import com.phalder.locationreminder.utils.setDisplayHomeAsUpEnabled
 import org.koin.android.ext.android.inject
 
 private const val GEOFENCE_RADIUS_IN_METERS = 1000
+
 class SaveReminderFragment : BaseFragment() {
     //Get the view model this time as a single to be shared with the another fragment
     override val _viewModel: SaveReminderViewModel by inject()
@@ -39,7 +41,8 @@ class SaveReminderFragment : BaseFragment() {
             context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     override fun onCreateView(
@@ -75,29 +78,44 @@ class SaveReminderFragment : BaseFragment() {
             // Add the reminder to Database and Add Geofence for it as well
             val geofencingClient = LocationServices.getGeofencingClient(requireActivity())
             val reminder = ReminderDTO(title, description, location, latitude, longitude)
-            //_viewModel.validateAndSaveReminder(ReminderDataItem(title, description, location, latitude, longitude))
-            add(requireContext(),  reminder, geofencingClient)
-        }
-    }
 
-    private fun add(context: Context, reminder: ReminderDTO, geofencingClient: GeofencingClient?) {
-        val geofence = buildGeofence(reminder)
-        if (geofence != null && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            geofencingClient?.addGeofences(buildGeofencingRequest(geofence), geofencePendingIntent)
-                ?.addOnSuccessListener {
-                    _viewModel.validateAndSaveReminder(ReminderDataItem(
+            if (_viewModel.validateAndSaveReminder(
+                    ReminderDataItem(
                         reminder.title,
                         reminder.description,
                         reminder.location,
                         reminder.latitude,
                         reminder.longitude,
-                        reminder.id))
-                }?.addOnFailureListener {
-                GeofenceErrorMessages.getErrorString(context, it)
+                        reminder.id
+                    )
+                )
+            ) {
+                add(requireContext(), reminder, geofencingClient)
             }
+
         }
     }
+
+    private fun add(context: Context, reminder: ReminderDTO, geofencingClient: GeofencingClient?) {
+        val geofence = buildGeofence(reminder)
+        if (geofence != null && ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            geofencingClient?.addGeofences(buildGeofencingRequest(geofence), geofencePendingIntent)
+                ?.addOnSuccessListener {
+                    Log.d(
+                        "SaveReminderFragment",
+                        "Added geofence for reminder with id ${reminder.id} successfully."
+                    )
+                }?.addOnFailureListener {
+                    Log.e("SaveReminderFragment",GeofenceErrorMessages.getErrorString(context, it))
+                }
+        }
+    }
+
     private fun buildGeofencingRequest(geofence: Geofence): GeofencingRequest {
         return GeofencingRequest.Builder()
             .setInitialTrigger(0)
@@ -108,7 +126,7 @@ class SaveReminderFragment : BaseFragment() {
     private fun buildGeofence(reminder: ReminderDTO): Geofence? {
         val latitude = reminder.latitude
         val longitude = reminder.longitude
-        val radius =  GEOFENCE_RADIUS_IN_METERS
+        val radius = GEOFENCE_RADIUS_IN_METERS
         if ((latitude != null) && (longitude != null) && (radius != null)) {
             return Geofence.Builder()
                 .setRequestId(reminder.id)
